@@ -1,10 +1,10 @@
-##Main user - researcher doing mass spec metabolite tracing experiments. 
+# Main user - researcher doing mass spec metabolite tracing experiments. 
 A wet lab researcher who is not familiar with computer science needs to analyze mass spec data from a metabolite tracing experiment using deuterium labeling
 
-What do they want to do with the tool?
+**What do they want to do with the tool?**
 Have readily readable data output from mass spec data. Use Jupyter notebook for user friendly output
 
-What needs and desires do they want for the tool?
+**What needs and desires do they want for the tool?**
 Needs: To pick deuterated compounds (identification/matching), adjust the mass of labeled compounds for the deuterated compound so they can be identified
 Output needs: refined spreadsheet of mass spec data
 
@@ -20,7 +20,7 @@ Wet lab researcher unfamiliar with computer science wants to find the peaks of t
 
 What is their skill level? 
 
-Main use case:
+## Main use case:
 A wet lab researcher who is not familiar with computer science needs to analyze mass spec data from a metabolite tracing experiment using deuterium labeling. She wants to pick out pairs of labeled metabolites that incorporate 2 different labeled fatty acids and adjust their mass so they can be identified with existing lipidomics databases. She needs to be able to adjust the parameters for error tolerance, mass difference, and desired outputs without needing to write python code. 
 
 Additional use case:
