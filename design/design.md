@@ -1,4 +1,4 @@
-Main user - researcher doing mass spec metabolite tracing experiments. 
+##Main user - researcher doing mass spec metabolite tracing experiments. 
 A wet lab researcher who is not familiar with computer science needs to analyze mass spec data from a metabolite tracing experiment using deuterium labeling
 
 What do they want to do with the tool?
