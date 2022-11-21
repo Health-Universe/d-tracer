@@ -8,7 +8,7 @@ def upload(file):
 	return df 
 
 '''define fcn for reducing columns'''
-def reduce_col(df):
+def format_col(df):
     col = df.columns.tolist() #create a list of all column names
     main = [0,2,4,5] #Index of main columns we wish to keep and compare
     stop = col.index([col for col in df.columns if '.1' in col][0]) #index of duplicate columns we don't need
@@ -21,8 +21,37 @@ def reduce_col(df):
     return df_keep 
 
 '''fcn for picking compound pairs'''
-def pick_pairs():
-    pass
+def pick_pairs(df):
+    '''Define lists and tolerances of each column to compare with itself'''
+    mz = df['m/z']
+    mz_tol = 1e-4
+    rt = df['Retention time (min)']
+    rt_tol = 1e-3
+    ccs = df['CCS (angstrom^2)']
+    ccs_tol = 1e-3
+
+    '''Initialize a list for indexes to be held for each pair of matched values'''
+    idxs = []
+    '''Create nested for loop to compare i with j in each column'''
+    for i in range(len(df)):
+        for j in range(len(df)):
+            '''Define checks for each column'''
+            check_mz = np.isclose(mz[i], mz[j]+6.02, mz_tol)        
+            check_rt = np.isclose(rt[i], rt[j], rt_tol)
+            check_ccs = np.isclose(ccs[i], ccs[j], ccs_tol)
+            
+            '''Record results of each check (True/False)'''
+            checks = [check_mz, check_rt, check_ccs]
+            
+            '''If all checks are true, append to list of pairs'''
+            if all(checks) and i!=j:
+                idxs.append([i,j])
+                pairs = np.array(idxs)
+            else:
+                pass
+
+    df_pairs = df.iloc[pairs.flatten()]
+    return df_pairs
 
 '''fcn for adjusting masses'''
 def mass_adj(df,a,b):
