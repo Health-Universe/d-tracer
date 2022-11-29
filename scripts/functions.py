@@ -1,6 +1,5 @@
 import pandas as pd
 import numpy as np
-import streamlit as st
 
 '''define fcn for receiving file in a pandas dataframe'''
 def upload(file):
@@ -17,11 +16,11 @@ def format_col(df):
     for i in main:
         col_main.append(col[i])
     '''Create new filtered dataframe of important columns'''
-    df_keep = df[col_main+intensities][:100]
+    df_keep = df[col_main + intensities]
     return df_keep 
 
 '''fcn for picking compound pairs'''
-def pick_pairs(df):
+def pick_pairs(df, m1, m2):
     '''Define lists and tolerances of each column to compare with itself'''
     mz = df['m/z']
     mz_tol = 1e-4
@@ -29,6 +28,7 @@ def pick_pairs(df):
     rt_tol = 1e-3
     ccs = df['CCS (angstrom^2)']
     ccs_tol = 1e-3
+    D = 1.0063
 
     '''Initialize a list for indexes to be held for each pair of matched values'''
     idxs = []
@@ -36,7 +36,7 @@ def pick_pairs(df):
     for i in range(len(df)):
         for j in range(len(df)):
             '''Define checks for each column'''
-            check_mz = np.isclose(mz[i], mz[j]+6.02, mz_tol)        
+            check_mz = np.isclose(mz[i], mz[j] + (m2*D - m1*D), mz_tol)        
             check_rt = np.isclose(rt[i], rt[j], rt_tol)
             check_ccs = np.isclose(ccs[i], ccs[j], ccs_tol)
             
@@ -50,10 +50,18 @@ def pick_pairs(df):
             else:
                 pass
 
-    df_pairs = df.iloc[pairs.flatten()]
-    return df_pairs
+    return pairs
 
 '''fcn for adjusting masses'''
-def mass_adj(df,a,b):
-    pass
+def mass_adj(pairs, df, m1, m2):
+    '''Adjusts masses of given dataframe and list of pairs. Pairs must be together,
+    with higher mass first. x is the lower value, y is the higher value.'''
+    D = 1.0063
+    df_pairs = df.iloc[pairs.flatten()]
+    masses = np.array(df_pairs["m/z"]).reshape((len(pairs), 2))
+    masses[:, 0] -= m2*D
+    masses[:, 1] -= m1*D
+
+    df_pairs.insert(2, "m/z_adj", masses.flatten().tolist())
+    return df_pairs
 
