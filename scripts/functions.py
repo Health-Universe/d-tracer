@@ -22,11 +22,11 @@ def format_col(df):
 '''fcn for picking compound pairs'''
 def pick_pairs(df, m1, m2):
     '''Define lists and tolerances of each column to compare with itself'''
-    mz = df['m/z']
+    mz = list(df['m/z'])
     mz_tol = 1e-4
-    rt = df['Retention time (min)']
+    rt = list(df['Retention time (min)'])
     rt_tol = 1e-3
-    ccs = df['CCS (angstrom^2)']
+    ccs = list(df['CCS (angstrom^2)'])
     ccs_tol = 1e-3
     D = 1.0063
 

@@ -1,12 +1,13 @@
 import functions
 import streamlit as st
+import time
 
 data = st.file_uploader("Choose file to upload:")
-limit = 100
+limit = 200
 
 if data is not None:
 	df = functions.upload(data)
-	df_keep = functions.format_col(df)#[:limit]
+	df_keep = functions.format_col(df)[:limit]
 	st.write("Dataset available for use.")
 
 	a = st.number_input("Enter first mass adjustment:", 0, 80, 5)
@@ -27,7 +28,10 @@ choices = [
 choice = st.selectbox("Pick One:", choices)
 
 if choice == choices[1]:
+	start = time.time()
 	df_pairs = functions.pick_pairs(df_keep, a, b)
+	end = time.time()
+	st.write("Runtime: ", end-start, "s")
 	st.write(df_pairs)
 else: 
 	pass
