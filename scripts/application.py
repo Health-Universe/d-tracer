@@ -6,7 +6,7 @@ limit = 100
 
 if data is not None:
 	df = functions.upload(data)
-	df_keep = functions.format_col(df)[:limit]
+	df_keep = functions.format_col(df)#[:limit]
 	st.write("Dataset available for use.")
 
 	a = st.number_input("Enter first mass adjustment:", 0, 80, 5)
