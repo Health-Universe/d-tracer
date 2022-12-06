@@ -23,8 +23,6 @@ def format_col(df, samples=None):
     col = df.columns.tolist() #create a list of all column names
     if samples is not None:
         stop = 16 + samples
-    else:
-        stop = col.index([col for col in df.columns if '.1' in col][0]) #index of duplicate columns we don't need
     intensities = col[16:stop] #intensity columns we wish to keep
     
     df_keep = df[col_main + intensities].sort_values(by=["Compound"], ascending=False).reset_index(drop=True)
