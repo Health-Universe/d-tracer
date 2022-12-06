@@ -19,7 +19,7 @@ A wet lab researcher who is not familiar with computer science needs to analyze 
 
 **Output data:**
 - Output 1: a subset of the peak list containing pairs of deuterated metabolites.
-- Output 2: The deuterated subset list with masses adjusted for the deuterium
+- Output 2: The deuterated subset list with masses adjusted for the deuterium.
 - Output 3: A list of mass adjusted, deuterated lipids that have been identifyed in LiPydomics.
 
 **Tools used:**
