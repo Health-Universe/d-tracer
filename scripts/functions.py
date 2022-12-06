@@ -1,55 +1,88 @@
-import pandas as pd
 import numpy as np
+import pandas as pd
+import sys
+import time
 
-"""define fcn for receiving file in a pandas dataframe"""
-def upload(file):
-	df = pd.read_csv(file,header=2) 
-	return df 
+def upload(file, limit=None):
+    """Function for importing csv file and removing top two irrelevant rows.
+    Optional 'limit' argument to only input the top [X] number of rows."""
+    
+    df = pd.read_csv(file,header=2, nrows=limit)
+    return df
 
-"""define fcn for reducing columns"""
-def format_col(df):
+
+def format_col(df, samples=None):
+    """Function for reducing dataframe columns to those that are applicable,
+    and then sorts the data based on 'Compound' name and resets the indices.
+    Inputs are a dataframe and optionally the number of samples being analyzed."""
+
+    col_main = ['Compound',
+                'm/z',
+                'Retention time (min)',
+                'CCS (angstrom^2)']
     col = df.columns.tolist() #create a list of all column names
-    main = [0,2,4,5] #Index of main columns we wish to keep and compare
-    stop = col.index([col for col in df.columns if '.1' in col][0]) #index of duplicate columns we don't need
+    if samples is not None:
+        stop = 16 + samples
+    else:
+        stop = col.index([col for col in df.columns if '.1' in col][0]) #index of duplicate columns we don't need
     intensities = col[16:stop] #intensity columns we wish to keep
-    col_main = [] #Column names of kept columns
-    for i in main:
-        col_main.append(col[i])
-    """Create new filtered dataframe of important columns"""
-    df_keep = df[col_main + intensities]
-    return df_keep 
+    
+    df_keep = df[col_main + intensities].sort_values(by=["Compound"], ascending=False).reset_index(drop=True)
+    return df_keep
+
 
 """fcn for picking compound pairs"""
-def pick_pairs(df, m1, m2):
-    """Define lists and tolerances of each column to compare with itself"""
-    mz = list(df['m/z'])
-    mz_tol = 1e-4
-    rt = list(df['Retention time (min)'])
-    rt_tol = 1e-3
-    ccs = list(df['CCS (angstrom^2)'])
-    ccs_tol = 1e-3
-    D = 1.0063
+def pick_pairs(df, a, b):
+    """Function for analyzing data and picking out pairs of compounds where the
+    RT and CCS match, and the m/z is within the mass-adjustment.
+    Inputs are a dataframe and two mass-adjustment components."""
 
-    """Initialize a list for indexes to be held for each pair of matched values"""
-    idxs = []
+
+    """Define lists and tolerances of each column to compare with itself"""
+    mz = np.array(df['m/z'])
+    mz_tol = 1e-4
+    rt = np.array(df['Retention time (min)'])
+    rt_tol = 1e-3
+    ccs = np.array(df['CCS (angstrom^2)'])
+    ccs_tol = 1e-3
+    D = 1.0063 # Deuterium
+    mass_adjust = D*(b - a)
+
+    toolbar_width = 60
+
+    # setup toolbar
+    start = time.time()
+    sys.stdout.write("[%s]" % ("#"))
+    sys.stdout.flush()
+    sys.stdout.write("\b" * (toolbar_width+1)) # return to start of line, after '['
+
+    idxs = [] # Initial list for pairs to be held if they pass the following checks
     """Create nested for loop to compare i with j in each column"""
     for i in range(len(df)):
-        for j in range(len(df)):
+        for j in range(i+1, len(df)):
             """Define checks for each column"""
-            check_mz = np.isclose(mz[i], mz[j] + (m2*D - m1*D), mz_tol)        
             check_rt = np.isclose(rt[i], rt[j], rt_tol)
-            check_ccs = np.isclose(ccs[i], ccs[j], ccs_tol)
-            
-            """Record results of each check (True/False)"""
-            checks = [check_mz, check_rt, check_ccs]
-            
-            """If all checks are true, append to list of pairs"""
-            if all(checks) and i!=j:
-                idxs.append([i,j])
-                pairs = np.array(idxs)
-            else:
-                pass
+            if check_rt == True: pass # Move on
+            else: continue # Move to next iteration
 
+            check_mz = np.isclose(mz[i], mz[j] + mass_adjust, mz_tol)
+            if check_mz == True: pass
+            else: continue
+
+            check_ccs = np.isclose(ccs[i], ccs[j], ccs_tol)
+            if check_ccs == True: pass
+            else: continue
+            
+            idxs.append([i,j])
+            pairs = np.array(idxs)
+
+            # update the bar
+            sys.stdout.write("#")
+            sys.stdout.flush()
+
+    sys.stdout.write("]/n") # this ends the progress bar
+    end = time.time()
+    print(pairs.shape[0], "pairs found | Runtime = ", end-start)
     return pairs
 
 """fcn for adjusting masses"""

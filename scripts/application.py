@@ -27,12 +27,13 @@ elif st.button("Upload"):
 
 choices = [
 	"What do you want to do?",
-	"See Full Dataset",
-	"Show Compound Pairs",
-	"Show Data for Compound Pairs",
+	# "See Full Dataset",
+	# "Show Compound Pairs",
+	# "Show Data for Compound Pairs",
 	"Adjust Masses of Pairs",
-	"ID Lipids",
-	"Visualize"
+	"Find Standards",
+	"Identify Lipids"
+	# "Visualize"
 	]
 choice = st.selectbox("Pick One:", choices)
 
