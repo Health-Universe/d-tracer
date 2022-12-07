@@ -64,19 +64,21 @@ def pick_pairs(df, a, b):
             else: continue
             
             idxs.append([i,j])
-            pairs = np.array(idxs)
+    idx_pairs = np.array(idxs)
+    flat_pairs = idx_pairs.flatten().tolist()
+    compound_pairs = np.array(df['Compound'].iloc[flat_pairs]).reshape(len(idx_pairs), 2)
 
-    return pairs
+    return idx_pairs, compound_pairs
 
 
-def mass_adj(pairs, df, m1, m2):
+def mass_adj(idx_pairs, df, a, b):
     """Adjusts masses of given dataframe and list of pairs. Pairs must be together,
     with higher mass first. x is the lower value, y is the higher value."""
     D = 1.0063
-    df_pairs = df.iloc[pairs.flatten()]
-    masses = np.array(df_pairs["m/z"]).reshape((len(pairs), 2))
-    masses[:, 0] -= m2*D
-    masses[:, 1] -= m1*D
+    df_pairs = df.iloc[idx_pairs].flatten()
+    masses = np.array(df_pairs["m/z"]).reshape((len(idx_pairs), 2))
+    masses[:, 0] -= b*D
+    masses[:, 1] -= a*D
 
     df_pairs.insert(2, "m/z_adj", masses.flatten().tolist())
     return df_pairs

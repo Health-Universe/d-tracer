@@ -25,7 +25,7 @@ if b < a:
 
 if st.checkbox("Analyze", help="Click to run pair picking algorithm and adjust masses"):
 	start = time.time()
-	pairs = functions.pick_pairs(df_keep, a, b)
+	idxs, pairs = functions.pick_pairs(df_keep, a, b)
 	# st.progress()
 	end = time.time()
 	st.success(str(pairs.shape[0]) + " pairs found | Runtime = " + str(round(end-start, 2)) + " seconds")
@@ -41,8 +41,7 @@ choices = [
 choice = st.selectbox("Pick One:", choices)
 
 if choice == choices[1]:
-	# pairs = functions.pick_pairs(df_keep, a, b)
-	df_adjusted = functions.mass_adj(pairs, df_keep, a, b)
+	df_adjusted = functions.mass_adj(idxs, df_keep, a, b)
 	st.dataframe(df_adjusted)
 
 if choice == choices[2]:
