@@ -1,4 +1,6 @@
 import functions
+# import id_standards
+# import identification
 import streamlit as st
 import time
 
@@ -43,10 +45,15 @@ choice = st.selectbox("Pick One:", choices)
 if choice == choices[1]:
 	df_adjusted = functions.mass_adj(idxs, df_keep, a, b)
 	st.dataframe(df_adjusted)
+	if st.download_button("export"):
+		# pd.to_csv("downloads")
+		pass
 
 if choice == choices[2]:
 	# match lipids to standards
-	pass
+	df_standard_keep = st.file_uploader("Choose standards file to upload:")
+	standards = id_standards(df_keep, df_standard_keep)
+	# export to csv
 
 if choice == choices[3]:
 	# match standards to LiPydomics
