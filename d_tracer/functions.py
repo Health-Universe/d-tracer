@@ -1,5 +1,6 @@
 import numpy as np
 import pandas as pd
+import streamlit as st
 import sys
 import time
 
@@ -11,7 +12,7 @@ def upload(file, limit=None):
     return df
 
 
-def format_col(df, samples=None):
+def format_col(df, samples):
     """Function for reducing dataframe columns to those that are applicable,
     and then sorts the data based on 'Compound' name and resets the indices.
     Inputs are a dataframe and optionally the number of samples being analyzed."""
@@ -20,21 +21,20 @@ def format_col(df, samples=None):
                 'm/z',
                 'Retention time (min)',
                 'CCS (angstrom^2)']
+
     col = df.columns.tolist() #create a list of all column names
-    if samples is not None:
-        stop = 16 + samples
+    stop = 16 + samples
     intensities = col[16:stop] #intensity columns we wish to keep
     
-    df_keep = df[col_main + intensities].sort_values(by=["Compound"], ascending=False).reset_index(drop=True)
+    df_keep = df[col_main + intensities].sort_values(
+        by=["Compound"], ascending=False).reset_index(drop=True)
     return df_keep
 
-
-"""fcn for picking compound pairs"""
+@st.cache
 def pick_pairs(df, a, b):
     """Function for analyzing data and picking out pairs of compounds where the
     RT and CCS match, and the m/z is within the mass-adjustment.
     Inputs are a dataframe and two mass-adjustment components."""
-
 
     """Define lists and tolerances of each column to compare with itself"""
     mz = np.array(df['m/z'])
@@ -45,14 +45,6 @@ def pick_pairs(df, a, b):
     ccs_tol = 1e-3
     D = 1.0063 # Deuterium
     mass_adjust = D*(b - a)
-
-    toolbar_width = 60
-
-    # setup toolbar
-    start = time.time()
-    sys.stdout.write("[%s]" % ("#"))
-    sys.stdout.flush()
-    sys.stdout.write("\b" * (toolbar_width+1)) # return to start of line, after '['
 
     idxs = [] # Initial list for pairs to be held if they pass the following checks
     """Create nested for loop to compare i with j in each column"""
@@ -72,26 +64,21 @@ def pick_pairs(df, a, b):
             else: continue
             
             idxs.append([i,j])
-            pairs = np.array(idxs)
+    idx_pairs = np.array(idxs)
+    flat_pairs = idx_pairs.flatten().tolist()
+    compound_pairs = np.array(df['Compound'].iloc[flat_pairs]).reshape(len(idx_pairs), 2)
 
-            # update the bar
-            sys.stdout.write("#")
-            sys.stdout.flush()
+    return idx_pairs, compound_pairs
 
-    sys.stdout.write("]/n") # this ends the progress bar
-    end = time.time()
-    print(pairs.shape[0], "pairs found | Runtime = ", end-start)
-    return pairs
 
-"""fcn for adjusting masses"""
-def mass_adj(pairs, df, m1, m2):
+def mass_adj(idx_pairs, df, a, b):
     """Adjusts masses of given dataframe and list of pairs. Pairs must be together,
     with higher mass first. x is the lower value, y is the higher value."""
     D = 1.0063
-    df_pairs = df.iloc[pairs.flatten()]
-    masses = np.array(df_pairs["m/z"]).reshape((len(pairs), 2))
-    masses[:, 0] -= m2*D
-    masses[:, 1] -= m1*D
+    df_pairs = df.iloc[idx_pairs].flatten()
+    masses = np.array(df_pairs["m/z"]).reshape((len(idx_pairs), 2))
+    masses[:, 0] -= b*D
+    masses[:, 1] -= a*D
 
     df_pairs.insert(2, "m/z_adj", masses.flatten().tolist())
     return df_pairs
