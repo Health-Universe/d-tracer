@@ -16,7 +16,7 @@ df = functions.upload(data, 1000)
 st.success("Dataset available for use")
 time.sleep(1)
 
-n_samples = st.number_input("Enter number of samples:", 0, 100, 0)
+n_samples = st.number_input("Enter number of samples:", 0, 100, 10)
 df_keep = functions.format_col(df, n_samples)
 
 a = st.number_input("Enter first mass adjustment:", 0, 80, 5)
@@ -45,15 +45,27 @@ choice = st.selectbox("Pick One:", choices)
 if choice == choices[1]:
 	df_adjusted = functions.mass_adj(idxs, df_keep, a, b)
 	st.dataframe(df_adjusted)
-	if st.download_button("export"):
+
+	
+	st.download_button(
+		label="export to csv",
+		data=df_adjusted.to_csv(index=False), 
+		file_name="tempfile.csv"
+		)
 		# pd.to_csv("downloads")
-		pass
+	
 
 if choice == choices[2]:
 	# match lipids to standards
-	df_standard_keep = st.file_uploader("Choose standards file to upload:")
-	standards = id_standards(df_keep, df_standard_keep)
-	# export to csv
+	st.markdown("## Choose standards file to upload")
+	df_standard_keep = st.file_uploader("")
+	#standards = id_standards(df_keep, df_standard_keep)
+
+	st.download_button(
+		label="export to csv",
+		data=standard_output.to_csv(index=False),
+		file_name="standards.csv"
+		)
 
 if choice == choices[3]:
 	# match standards to LiPydomics
