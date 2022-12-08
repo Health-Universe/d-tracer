@@ -5,8 +5,12 @@ import numpy as np
 import pandas as pd
 import unittest
 import functions as fn
+import pathlib
 
-test_data = pd.read_csv('data/test_data/2022_04_22_NEG_RSL3DAAvsCtrl_test_input.csv', header=2)
+my_data_path = pathlib.Path(__file__).parents[2].joinpath("examples/example_input.csv")
+
+test_data = pd.read_csv(my_data_path, header=2)
+
 formatted_data = fn.format_col(test_data, 6)
 
 # in the form of nx2 np array of compound names
