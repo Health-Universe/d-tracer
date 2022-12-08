@@ -72,10 +72,9 @@ def pick_pairs(df, a, b):
 
 
 def mass_adj(idx_pairs, df, a, b):
-    """Adjusts masses of given dataframe and list of pairs. Pairs must be together,
-    with higher mass first. x is the lower value, y is the higher value."""
+    """Adjusts masses of given dataframe and list of pairs. """
     D = 1.0063
-    df_pairs = df.iloc[idx_pairs].flatten()
+    df_pairs = df.iloc[idx_pairs.flatten()]
     masses = np.array(df_pairs["m/z"]).reshape((len(idx_pairs), 2))
     masses[:, 0] -= b*D
     masses[:, 1] -= a*D
