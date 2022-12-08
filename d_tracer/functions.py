@@ -3,6 +3,8 @@ import pandas as pd
 import streamlit as st
 import sys
 import time
+from lipydomics.data import Dataset
+from lipydomics.identification import add_feature_ids
 
 def upload(file, limit=None):
     """Function for importing csv file and removing top two irrelevant rows.
@@ -80,5 +82,24 @@ def mass_adj(idx_pairs, df, a, b):
     masses[:, 1] -= a*D
 
     df_pairs.insert(2, "m/z_adj", masses.flatten().tolist())
+    df_pairs.to_csv('../data/output_data/mass_adjust_output.csv')
+    print('.csv file exported to data/output_data')
     return df_pairs
 
+
+def lipid_id(input, output):
+    """identifies mass adjusted lipids and exports .xlsx to path specified"""
+    full = pd.read_csv(input)
+    trim = full.drop(columns=['Compound', 'm/z'])
+    trim.to_csv('data/trim.csv', index=False)
+    data = open('data/trim.csv')
+    # need to change this to save to a temp directory
+    dset = Dataset(data, esi_mode='neg')
+    mz_tol = 0.03
+    rt_tol = 0.3
+    ccs_tol = 3.0
+    tol = [mz_tol, rt_tol, ccs_tol]
+    add_feature_ids(dset, tol, level='any')
+    dset.export_xlsx(output)
+    print('Identification Complete!')
+    
