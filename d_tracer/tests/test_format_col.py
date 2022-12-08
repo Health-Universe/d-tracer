@@ -22,4 +22,15 @@ class TestColumn(unittest.TestCase):
         df=functions.upload(my_data_path,limit=None)
         functions.format_col(df, 1)
 
+    def test_header_length(self):
+        """
+        test to check that headers are made correctly and that they have the
+        right length
+        """
+        df=functions.upload(my_data_path,limit=None)
+        df_edit=functions.format_col(df, 1)
+
+        message="headers not matching!"
+
+        self.assertEqual(len(df_edit.columns), 5, message) 
         
