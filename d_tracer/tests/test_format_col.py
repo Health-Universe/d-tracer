@@ -19,7 +19,7 @@ class TestColumn(unittest.TestCase):
         """
         smoke test to make sure column function runs
         """
-        functions.upload(my_data_path,limit=None)
-        functions.format_col(my_data_path, samples=None)
+        df=functions.upload(my_data_path,limit=None)
+        functions.format_col(df, 1)
 
         
