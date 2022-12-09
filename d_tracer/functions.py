@@ -87,12 +87,13 @@ def mass_adj(idx_pairs, df, a, b):
     return df_pairs
 
 
-def lipid_id(input, output):
+def lipid_id(input, output_name): 
     """identifies mass adjusted lipids and exports .xlsx to path specified"""
-    full = pd.read_csv(input)
-    trim = full.drop(columns=['Compound', 'm/z'])
+    # full = pd.read_csv(input)     # this line shouldn't be necessary if we feed in a dataframe
+    trim = input.drop(columns=['Compound', 'm/z'])
     trim.to_csv('data/trim.csv', index=False)
-    data = open('data/trim.csv')
+    data = open('data/trim.csv')    # May be able to condense this with data = trim.to_csv(index=False)
+
     # need to change this to save to a temp directory
     dset = Dataset(data, esi_mode='neg')
     mz_tol = 0.03
@@ -100,6 +101,6 @@ def lipid_id(input, output):
     ccs_tol = 3.0
     tol = [mz_tol, rt_tol, ccs_tol]
     add_feature_ids(dset, tol, level='any')
-    dset.export_xlsx(output)
+    dset.export_xlsx(output_name)
     print('Identification Complete!')
-    
+    return output_name
