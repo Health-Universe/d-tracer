@@ -104,3 +104,13 @@ def lipid_id(input, output_name):
     dset.export_xlsx(output_name)
     print('Identification Complete!')
     return output_name
+
+def id_standards(df, mz_standard, rt_standard):
+    "Identify standards based on m/z and rt values."
+    find_mz = df[np.isclose(df['m/z'], mz_standard)]
+    if find_mz.shape[0] < 1:
+        print ('Warning: Cannot find matching m/z standard')
+    find_mz_rt = find_mz[np.isclose(find_mz['Retention time (min)'], rt_standard)]
+    if find_mz_rt.shape[0] < 1:
+        print ('Warning: Cannot find matching Retention time standard')
+    return find_mz_rt
