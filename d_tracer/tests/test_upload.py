@@ -6,6 +6,8 @@ import functions
 import pathlib
 
 my_data_path = pathlib.Path(__file__).parents[2].joinpath("examples/example_input.csv")
+wrong_data = pathlib.Path(__file__).parents[2].joinpath("examples/example_wrong_input.csv")
+
 
 class TestUpload(unittest.TestCase):
     """
@@ -19,12 +21,12 @@ class TestUpload(unittest.TestCase):
         """
         functions.upload(my_data_path, limit=None)
 
-    def test_file_type(self):
+    def test_correct_file_type(self):
         """
-        testing to make sure a csv file is uploaded
+        this test should show that space delimited files are incorrect
         """
-        try:
-            functions.upload(my_data_path, limit=None) 
-        except IOError:
-            print("CANNOT OPEN FILE. INCORRECT FILE FORMATTING!")
+        with self.assertRaises(ValueError):
+            functions.upload(wrong_data, limit=None)
+            print("Incorrect csv format. please make sure it is comma separated")   
+
         

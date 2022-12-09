@@ -3,6 +3,8 @@ import pandas as pd
 import streamlit as st
 import sys
 import time
+from lipydomics.data import Dataset
+from lipydomics.identification import add_feature_ids
 
 def upload(file, limit=None):
     """Function for importing csv file and removing top two irrelevant rows.
@@ -64,20 +66,41 @@ def pick_pairs(df, a, b):
             else: continue
             
             idxs.append([i,j])
-            pairs = np.array(idxs)
+    idx_pairs = np.array(idxs)
+    flat_pairs = idx_pairs.flatten().tolist()
+    compound_pairs = np.array(df['Compound'].iloc[flat_pairs]).reshape(len(idx_pairs), 2)
 
-    return pairs
+    return idx_pairs, compound_pairs
 
 
-def mass_adj(pairs, df, m1, m2):
-    """Adjusts masses of given dataframe and list of pairs. Pairs must be together,
-    with higher mass first. x is the lower value, y is the higher value."""
+def mass_adj(idx_pairs, df, a, b):
+    """Adjusts masses of given dataframe and list of pairs. """
     D = 1.0063
-    df_pairs = df.iloc[pairs.flatten()]
-    masses = np.array(df_pairs["m/z"]).reshape((len(pairs), 2))
-    masses[:, 0] -= m2*D
-    masses[:, 1] -= m1*D
+    df_pairs = df.iloc[idx_pairs.flatten()]
+    masses = np.array(df_pairs["m/z"]).reshape((len(idx_pairs), 2))
+    masses[:, 0] -= b*D
+    masses[:, 1] -= a*D
 
     df_pairs.insert(2, "m/z_adj", masses.flatten().tolist())
+    df_pairs.to_csv('../data/output_data/mass_adjust_output.csv')
+    print('.csv file exported to data/output_data')
     return df_pairs
 
+
+def lipid_id(input, output_name): 
+    """identifies mass adjusted lipids and exports .xlsx to path specified"""
+    # full = pd.read_csv(input)     # this line shouldn't be necessary if we feed in a dataframe
+    trim = input.drop(columns=['Compound', 'm/z'])
+    trim.to_csv('data/trim.csv', index=False)
+    data = open('data/trim.csv')    # May be able to condense this with data = trim.to_csv(index=False)
+
+    # need to change this to save to a temp directory
+    dset = Dataset(data, esi_mode='neg')
+    mz_tol = 0.03
+    rt_tol = 0.3
+    ccs_tol = 3.0
+    tol = [mz_tol, rt_tol, ccs_tol]
+    add_feature_ids(dset, tol, level='any')
+    dset.export_xlsx(output_name)
+    print('Identification Complete!')
+    return output_name
