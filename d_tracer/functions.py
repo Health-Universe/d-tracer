@@ -1,8 +1,6 @@
 import numpy as np
 import pandas as pd
 import streamlit as st
-import sys
-import time
 from lipydomics.data import Dataset
 from lipydomics.identification import add_feature_ids
 
@@ -102,7 +100,8 @@ def lipid_id(input):
     return dset
 
 def lipid_id_to_excel(outputname):
-    dset.
+    # dset.
+    pass
 
 def id_standards(df, mz_standard, rt_standard):
     "Identify standards based on m/z and rt values."
