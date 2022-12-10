@@ -8,9 +8,6 @@ A tool for picking out deuterium labeled compounds from an ion-mobility mass spe
 D-Tracer is a software to analyze deuterium labeling mass spectrometry data. It is intended for lipidomics data, however can be used for other mass spectrometry datasets. It picks out deuterium-labeling peaks based on input values from the user. This list of labeled peaks can then be mass-adjusted to remove the additional mass of the deuterium label. For lipidomics data, the lipid species can then be identified using integrated [LiPydomics](https://github.com/dylanhross/lipydomics) 
 software. Internal standards can be selected from the peak list and structures can be provided for identified lipids. 
 
-## Diagram
-
-tbd
 
 ## How to use
 
@@ -27,6 +24,8 @@ The user will also need to input their number of samples (1-100) and the mass di
 
 ## Repository Structure
 
-![Structure of D-Tracer](/doc/dtracer_repo_tree_crop.png)
+## Diagram
+
+![Structure of D-Tracer](/doc/dtracer_scheme.png)
 
 
