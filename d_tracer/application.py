@@ -12,6 +12,7 @@ import functions
 import streamlit as st
 import time
 
+
 # """Upload the csv datafile from the mass spec machine."""
 data = st.file_uploader("Choose file to upload:")
 
@@ -86,11 +87,11 @@ if choice_b == choices[1]:
 
 if choice_b == choices[2]:
 	# match standards to LiPydomics
-	lipid_ids = functions.lipid_id(df_adjusted, "output.xlsx")
-	st.write(lipid_ids)
+	lipid_ids = functions.lipid_id(df_adjusted)
+	st.write('Identification Complete')
 
-	# st.download_button(
-	# 	label="export to excel",
-	# 	data=lipid_ids,
-	# 	file_name="output.xlsx"
-	# 	)
+	#st.download_button(
+		#label="Export to CSV",
+		#ata=df_adjusted.to_csv(index=False), 
+		#file_name="tempfile.csv"
+		#)
