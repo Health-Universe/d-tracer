@@ -1,9 +1,8 @@
 """test for upload function"""
 
-import unittest
-import numpy as np
 import functions
 import pathlib
+import unittest
 
 my_data_path = pathlib.Path(__file__).parents[2].joinpath("examples/example_input.csv")
 wrong_data = pathlib.Path(__file__).parents[2].joinpath("examples/example_wrong_input.csv")
