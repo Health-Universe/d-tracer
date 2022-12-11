@@ -1,11 +1,12 @@
 """Test case for pick_pairs function"""
 
-from collections import Counter
+import functions as fn
 import numpy as np
 import pandas as pd
-import unittest
-import functions as fn
 import pathlib
+import unittest
+
+from collections import Counter
 
 my_data_path = pathlib.Path(__file__).parents[2].joinpath("examples/example_input.csv")
 

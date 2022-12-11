@@ -104,7 +104,8 @@ def lipid_id_to_excel(outputname):
     pass
 
 def id_standards(df, mz_standard, rt_standard):
-    "Identify standards based on m/z and rt values."
+    """Identify standards based on m/z and rt values."""
+    # mz_standard and rt_standard are numerical values that user inputs
     find_mz = df[np.isclose(df['m/z'], mz_standard)]
     if find_mz.shape[0] < 1:
         print ('Warning: Cannot find matching m/z standard')
