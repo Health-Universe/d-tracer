@@ -8,8 +8,9 @@ dependencies:
   - pathlib=1.0.1
   - pathlib2=2.3.6
   - pip=22.2.2
-  - python=3.9
+  - python=3.10
   - streamlit=1.15.2
   - pip:
       - biopython==1.76
       - matplotlib==3.4.2
+      - lipydomics
