@@ -13,4 +13,4 @@ dependencies:
   - pip:
       - biopython==1.76
       - matplotlib==3.4.2
-      - lipydomics
+      - lipydomics==1.6.8
