@@ -13,12 +13,12 @@ A wet lab researcher who is not familiar with computer science needs to analyze 
 - The tool can plot relative abancences of different lipid classes once identified.
 
 **Input data:**
-- Input 1: a peak list with m/z, rt, css, and normalized abundance columns for each sample.
+- Input 1: A peak list with m/z, rt, css, and normalized abundance columns for each sample.
 - Input 2: The desired mass difference and error tolerance for identifying deuterated lipids. 
 - Input 3 (optional): A list of standard m/z and rt values.
 
 **Output data:**
-- Output 1: a subset of the peak list containing pairs of deuterated metabolites.
+- Output 1: A subset of the peak list containing pairs of deuterated metabolites.
 - Output 2: The deuterated subset list with masses adjusted for the deuterium.
 - Output 3: A list of mass adjusted, deuterated lipids that have been identifyed in LiPydomics.
 

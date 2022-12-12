@@ -86,9 +86,8 @@ if choice_b == choices[1]:
 		)
 
 if choice_b == choices[2]:
-	# match standards to LiPydomics
-	lipid_ids = functions.lipid_id(df_adjusted)
-	st.write('Identification Complete')
+	lipid_ids = functions.lipid_id('data/output_data/mass_adjust_output.csv')
+	st.write('Identification Complete, ID saved to data/output_data')
 
 	#st.download_button(
 		#label="Export to CSV",
