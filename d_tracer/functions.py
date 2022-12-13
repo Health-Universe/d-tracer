@@ -1,6 +1,8 @@
 import numpy as np
 import pandas as pd
 import streamlit as st
+import sys
+import time
 from lipydomics.data import Dataset
 from lipydomics.identification import add_feature_ids
 
@@ -38,11 +40,11 @@ def pick_pairs(df, a, b):
 
     """Define lists and tolerances of each column to compare with itself"""
     mz = np.array(df['m/z'])
-    mz_tol = 1e-4
+    mz_tol = 0.005
     rt = np.array(df['Retention time (min)'])
     rt_tol = 1e-3
     ccs = np.array(df['CCS (angstrom^2)'])
-    ccs_tol = 1e-3
+    ccs_tol = .03
     D = 1.0063 # Deuterium
     mass_adjust = D*(b - a)
 
@@ -55,11 +57,11 @@ def pick_pairs(df, a, b):
             if check_rt == True: pass # Move on
             else: continue # Move to next iteration
 
-            check_mz = np.isclose(mz[i], mz[j] + mass_adjust, mz_tol)
+            check_mz = np.isclose(mz[i], mz[j] + mass_adjust, atol = mz_tol)
             if check_mz == True: pass
             else: continue
 
-            check_ccs = np.isclose(ccs[i], ccs[j], ccs_tol)
+            check_ccs = np.isclose(ccs[i], ccs[j], rtol = ccs_tol)
             if check_ccs == True: pass
             else: continue
             
@@ -80,15 +82,15 @@ def mass_adj(idx_pairs, df, a, b):
     masses[:, 1] -= a*D
 
     df_pairs.insert(2, "m/z_adj", masses.flatten().tolist())
-    # df_pairs.to_csv('../data/output_data/mass_adjust_output.csv')
+    df_pairs.to_csv('data/output_data/mass_adjust_output.csv')
     print('.csv file exported to data/output_data')
     return df_pairs
 
 
 def lipid_id(input):
     """identifies mass adjusted lipids and exports .xlsx to path specified"""
-    # full = pd.read_csv(input)     # this line shouldn't be necessary if we feed in a dataframe
-    trim = input.drop(columns=['Compound', 'm/z'])
+    full = pd.read_csv(input)
+    trim = full.drop(columns=['Compound', 'm/z'])
     data = trim.to_csv(index=False)
     dset = Dataset(data, esi_mode='neg')
     mz_tol = 0.03
@@ -97,14 +99,15 @@ def lipid_id(input):
     tol = [mz_tol, rt_tol, ccs_tol]
     add_feature_ids(dset, tol, level='any')
     dset.export_xlsx('data/id_output.xlsx')
-    return dset
 
-def lipid_id_to_excel(outputname):
-    # dset.
-    pass
+
+
+
+
 
 def id_standards(df, mz_standard, rt_standard):
-    "Identify standards based on m/z and rt values."
+    """Identify standards based on m/z and rt values."""
+    # mz_standard and rt_standard are numerical values that user inputs
     find_mz = df[np.isclose(df['m/z'], mz_standard)]
     if find_mz.shape[0] < 1:
         print ('Warning: Cannot find matching m/z standard')

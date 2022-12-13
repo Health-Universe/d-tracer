@@ -1,2 +1,12 @@
-__pycache__/
-.ipynb_checkpoints/
+# Byte-compiled / optimized / DLL files
+__pycache__
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# Dave's code
+functions.dacb.py
+
+# Data Files
+*.csv
+*.xlsx

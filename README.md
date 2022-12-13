@@ -11,7 +11,7 @@ software. Internal standards can be selected from the peak list and structures c
 
 ## How to use
 
-D-Tracer is available as a user-friendly webpage at [this url](https://nreimers99-d-tracer-scriptsapplication-mtmw3o.streamlit.app/). It is intended to be accessible for people with limited programming experience. It can also be cloned from the GitHub repository for those comfortable with Python.
+D-Tracer is available as a user-friendly webpage at [this url](https://nreimers99-d-tracer-d-tracerapplication-hdyn0b.streamlit.app/). It is intended to be accessible for people with limited programming experience. It can also be cloned from the GitHub repository for those comfortable with Python.
 
 Either way you choose to use D-Tracer, it will require some user inputs. The first is a peak list in .csv format. The peak list must have columns for m/z, retention time, and ccs values as well as normalized intensities for 1 or more samples. 
 
@@ -23,9 +23,27 @@ The user can then choose the desired functionality from a drop-down menu.
 The user will also need to input their number of samples (1-100) and the mass difference for the deuterium labeling. For example, if you were looking for species labeled with D-8, you would enter 0 as the first number and 8 as the second number. if you added both D-5 and D-11, you would enter 5 for the first number and 11 for the second number. These values will be multiplied by the mass difference between deuterium and hydrogen (1.0063) and used to find pairs of peaks that have the same mass once adjusted for the deuterium. The first number must be smaller than the second.
 
 ## Repository Structure
+```
+├── d_tracer
+│   ├── __init__.py
+│   ├── application.py
+│   ├── functions.dacb.py
+│   ├── functions.py
+│   ├── requirements.txt
+│   └── tests
+│       ├── __init__.py
+│       ├── test_format_col.py
+│       ├── test_mass_adjust.py
+│       ├── test_pick_pairs.py
+│       └── test_upload.py
+```
+## Dependencies
+
+The identification module of D-Tracer uses an open-source software called [LiPydomics](https://github.com/dylanhross/lipydomics). It can be installed using the command pip install LiPydomics, and will be installed automatically when using the virtual envirnment provided in our environment.yml file. If you are not identifying lipids, LiPydomics is not needed to use D-Tracer.
 
 ## Diagram
 
 ![Structure of D-Tracer](/doc/dtracer_scheme.png)
+
 
 
