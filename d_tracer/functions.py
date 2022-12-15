@@ -3,8 +3,8 @@ import pandas as pd
 import streamlit as st
 import sys
 import time
-from LiPydomics.data import Dataset
-from LiPydomics.identification import add_feature_ids
+from lipydomics.data import Dataset
+from lipydomics.identification import add_feature_ids
 
 def upload(file, limit=None):
     """Function for importing csv file and removing top two irrelevant rows.
