@@ -2,4 +2,4 @@ numpy
 pandas
 streamlit
 streamlib
-LiPydomics==1.6.8
+lipidomics 
