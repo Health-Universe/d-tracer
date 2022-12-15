@@ -1,4 +1,4 @@
 numpy
 pandas
 streamlit
-LiPydomics
+LiPydomics==1.6.8
