@@ -1,6 +1,6 @@
 name: base
 channels:
-  # - conda-forge
+  - conda-forge
   - defaults
 dependencies:
   - numpy=1.23.4
