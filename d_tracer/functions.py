@@ -82,7 +82,7 @@ def mass_adj(idx_pairs, df, a, b):
     masses[:, 1] -= a*D
 
     df_pairs.insert(2, "m/z_adj", masses.flatten().tolist())
-    df_pairs.to_csv('data/output_data/mass_adjust_output.csv')
+    # df_pairs.to_csv('data/output_data/mass_adjust_output.csv')
     print('.csv file exported to data/output_data')
     return df_pairs
 

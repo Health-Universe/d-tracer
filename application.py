@@ -7,8 +7,9 @@ If the pairs radio button is chosen, it runs the lengthy pair_picking algorithm 
 take an average of 5 min. Afterwards, the user has the option to view the data of the pairs
 and export, or compare the pairs with the LiPydomics database."""
 
-import functions
+from d_tracer import functions
 # import identification
+import pandas as pd
 import streamlit as st
 import time
 
@@ -86,7 +87,11 @@ if choice_b == choices[1]:
 		)
 
 if choice_b == choices[2]:
-	lipid_ids = functions.lipid_id('data/output_data/mass_adjust_output.csv')
+	temp_data = st.file_uploader("Choose file to upload again:")
+	csv_data = pd.read_csv(temp_data)
+	if temp_data is None:
+		st.stop()
+	lipid_ids = functions.lipid_id(csv_data)
 	st.write('Identification Complete, ID saved to data/output_data')
 
 	#st.download_button(
