@@ -7,11 +7,12 @@ If the pairs radio button is chosen, it runs the lengthy pair_picking algorithm 
 take an average of 5 min. Afterwards, the user has the option to view the data of the pairs
 and export, or compare the pairs with the LiPydomics database."""
 
-from d_tracer import functions
+#from d_tracer import functions
 # import identification
 import pandas as pd
 import streamlit as st
 import time
+import functions
 
 
 # """Upload the csv datafile from the mass spec machine."""
