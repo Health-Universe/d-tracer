@@ -40,11 +40,11 @@ def pick_pairs(df, a, b):
 
     """Define lists and tolerances of each column to compare with itself"""
     mz = np.array(df['m/z'])
-    mz_tol = 0.005
+    mz_tol = 1e-4 # 0.005
     rt = np.array(df['Retention time (min)'])
     rt_tol = 1e-3
     ccs = np.array(df['CCS (angstrom^2)'])
-    ccs_tol = .03
+    ccs_tol = 1e-2 # .03
     D = 1.0063 # Deuterium
     mass_adjust = D*(b - a)
 
@@ -68,9 +68,9 @@ def pick_pairs(df, a, b):
             idxs.append([i,j])
     idx_pairs = np.array(idxs)
     flat_pairs = idx_pairs.flatten().tolist()
-    compound_pairs = np.array(df['Compound'].iloc[flat_pairs]).reshape(len(idx_pairs), 2)
+    mass_pairs = np.array(df['m/z'].iloc[flat_pairs]).reshape(len(idx_pairs), 2)
 
-    return idx_pairs, compound_pairs
+    return idx_pairs, mass_pairs
 
 
 def mass_adj(idx_pairs, df, a, b):
