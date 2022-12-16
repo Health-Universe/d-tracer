@@ -4,7 +4,6 @@ import pathlib
 import streamlit as st
 import sys
 import time
-from io import BytesIO
 from lipydomics.data import Dataset
 from lipydomics.identification import add_feature_ids
 
@@ -115,15 +114,3 @@ def id_standards(df, mz_standard, rt_standard):
         print ('Warning: Cannot find matching Retention time standard')
     return find_mz_rt
 
-def to_excel(df):
-    """ returns an excel file from data frame """
-    output = BytesIO()
-    writer = pd.ExcelWriter(output, engine='xlsxwriter')
-    df.to_excel(writer, index=False, sheet_name='d_tracer_excel')
-    workbook = writer.book
-    worksheet = writer.sheets['d_tracer_excel']
-    format1 = workbook.add_format({'num_format': '0.00'}) 
-    worksheet.set_column('A:A', None, format1)  
-    writer.save()
-    processed_data = output.getvalue()
-    return processed_data
