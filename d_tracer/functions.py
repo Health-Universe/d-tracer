@@ -4,6 +4,7 @@ import pathlib
 import streamlit as st
 import sys
 import time
+from io import BytesIO
 from lipydomics.data import Dataset
 from lipydomics.identification import add_feature_ids
 
