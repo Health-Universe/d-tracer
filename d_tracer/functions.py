@@ -117,3 +117,16 @@ def id_standards(df, mz_standard, rt_standard):
     if find_mz_rt.shape[0] < 1:
         print ('Warning: Cannot find matching Retention time standard')
     return find_mz_rt
+
+def to_excel(df):
+    """ returns an excel file from data frame """
+    output = BytesIO()
+    writer = pd.ExcelWriter(output, engine='xlsxwriter')
+    df.to_excel(writer, index=False, sheet_name='d_tracer_excel')
+    workbook = writer.book
+    worksheet = writer.sheets['d_tracer_excel']
+    format1 = workbook.add_format({'num_format': '0.00'}) 
+    worksheet.set_column('A:A', None, format1)  
+    writer.save()
+    processed_data = output.getvalue()
+    return processed_data
