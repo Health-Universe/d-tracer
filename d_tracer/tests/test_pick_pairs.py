@@ -43,6 +43,11 @@ class TestPairs(unittest.TestCase):
         """see if fcn runs"""
         fn.pick_pairs(formatted_data, 5, 11)
 
+    def test_edge1(self):
+        """Ensures number of pairs is correct before checking the values"""
+        idx_pairs, masses = fn.pick_pairs(formatted_data, 5, 11)
+        self.assertEqual(len(masses), len(true_pairs))
+
     def test_oneshot(self):
         """Loops through true pairs for each calculated pair and looks at whether
         the pairs are the same or not. The loop creates a list of T/F values for
@@ -63,5 +68,4 @@ class TestPairs(unittest.TestCase):
     
     # test for 
     
-    def test_edge(self):
-        pass
+    

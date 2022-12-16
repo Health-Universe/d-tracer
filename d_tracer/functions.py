@@ -57,11 +57,11 @@ def pick_pairs(df, a, b):
             if check_rt == True: pass # Move on
             else: continue # Move to next iteration
 
-            check_mz = np.isclose(mz[i], mz[j] + mass_adjust, atol = mz_tol)
+            check_mz = np.isclose(mz[i], mz[j] + mass_adjust, mz_tol)
             if check_mz == True: pass
             else: continue
 
-            check_ccs = np.isclose(ccs[i], ccs[j], rtol = ccs_tol)
+            check_ccs = np.isclose(ccs[i], ccs[j], ccs_tol)
             if check_ccs == True: pass
             else: continue
             
