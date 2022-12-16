@@ -100,13 +100,9 @@ def lipid_id(input):
     ccs_tol = 3.0
     tol = [mz_tol, rt_tol, ccs_tol]
     add_feature_ids(dset, tol, level='any')
-    my_data_path = pathlib.Path(__file__).parents[2].joinpath("data/id_output.xlsx")
-    dset.export_xlsx(my_data_path)
-
-
-
-
-
+    #my_data_path = pathlib.Path(__file__).parents[2].joinpath("data/id_output.xlsx")
+    #dset.export_xlsx(my_data_path)
+    return dset
 
 def id_standards(df, mz_standard, rt_standard):
     """Identify standards based on m/z and rt values."""
