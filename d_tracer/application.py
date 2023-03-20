@@ -73,8 +73,8 @@ else: st.stop()
 # """Define choices of data for the user to view."""
 choices = [
 	"What do you want to see?",
-	"Show mass-adjusted data of pairs",
-	"Identify Lipids"
+	"Show mass-adjusted data of pairs"
+	#"Identify Lipids"
 	]
 choice_b = st.selectbox("Pick One:", choices)
 
@@ -87,13 +87,13 @@ if choice_b == choices[1]:
 		file_name="tempfile.csv"
 		)
 
-if choice_b == choices[2]:
-	temp_data = st.file_uploader("Choose file to upload again:")
-	csv_data = pd.read_csv(temp_data)
-	if temp_data is None:
-		st.stop()
-	lipid_ids = functions.lipid_id(csv_data)
-	st.write('Identification Complete, ID saved to data/output_data')
+# if choice_b == choices[2]:
+	#temp_data = st.file_uploader("Choose file to upload again:")
+	#csv_data = pd.read_csv(temp_data)
+	#if temp_data is None:
+		#st.stop()
+	#lipid_ids = functions.lipid_id(csv_data)
+	#st.write('Identification Complete, ID saved to data/output_data')
 
 	#st.download_button(
 		#label="Export to CSV",
