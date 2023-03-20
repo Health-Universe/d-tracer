@@ -13,6 +13,12 @@ import pandas as pd
 import streamlit as st
 import time
 import functions
+import numpy as np                                                                                                                                                        
+import pathlib                                                                  
+import sys                                                                      
+import time                                                                     
+from lipydomics.data import Dataset                                             
+from lipydomics.identification import add_feature_ids 
 
 
 # """Upload the csv datafile from the mass spec machine."""
@@ -87,16 +93,25 @@ if choice_b == choices[1]:
 		file_name="tempfile.csv"
 		)
 
+<<<<<<< HEAD
 # if choice_b == choices[2]:
 	#temp_data = st.file_uploader("Choose file to upload again:")
 	#csv_data = pd.read_csv(temp_data)
 	#if temp_data is None:
 		#st.stop()
 	#lipid_ids = functions.lipid_id(csv_data)
+=======
+if choice_b == choices[2]:
+	temp_data = st.file_uploader("Choose file to upload again:")
+	csv_data = pd.read_csv(temp_data)
+	if temp_data is None:
+		st.stop()
+	lipid_ids = functions.lipid_id(csv_data)
+>>>>>>> 7d8a731b538fe4c4c6839b3f18c0cc35ae76b852
 	#st.write('Identification Complete, ID saved to data/output_data')
 
-	#st.download_button(
-		#label="Export to CSV",
-		#ata=df_adjusted.to_csv(index=False), 
-		#file_name="tempfile.csv"
-		#)
+	st.download_button(
+		label="Export to excel",
+		data=lipid_ids.to_excel("tempfile.xlsx"), 
+		file_name="tempfile.xlsx"
+		)
