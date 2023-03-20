@@ -101,8 +101,8 @@ if choice_b == choices[1]:
 	#lipid_ids = functions.lipid_id(csv_data)
 	#st.write('Identification Complete, ID saved to data/output_data')
 
-	st.download_button(
-		label="Export to excel",
-		data=lipid_ids.to_excel("tempfile.xlsx"), 
-		file_name="tempfile.xlsx"
-		)
+	#st.download_button(
+		#label="Export to excel",
+		#data=lipid_ids.to_excel("tempfile.xlsx"), 
+		#file_name="tempfile.xlsx"
+		
