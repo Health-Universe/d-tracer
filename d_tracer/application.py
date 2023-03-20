@@ -93,21 +93,12 @@ if choice_b == choices[1]:
 		file_name="tempfile.csv"
 		)
 
-<<<<<<< HEAD
 # if choice_b == choices[2]:
 	#temp_data = st.file_uploader("Choose file to upload again:")
 	#csv_data = pd.read_csv(temp_data)
 	#if temp_data is None:
 		#st.stop()
 	#lipid_ids = functions.lipid_id(csv_data)
-=======
-if choice_b == choices[2]:
-	temp_data = st.file_uploader("Choose file to upload again:")
-	csv_data = pd.read_csv(temp_data)
-	if temp_data is None:
-		st.stop()
-	lipid_ids = functions.lipid_id(csv_data)
->>>>>>> 7d8a731b538fe4c4c6839b3f18c0cc35ae76b852
 	#st.write('Identification Complete, ID saved to data/output_data')
 
 	st.download_button(
