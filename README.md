@@ -11,7 +11,7 @@ software. Internal standards can be selected from the peak list and structures c
 
 ## How to use
 
-D-Tracer is available as a user-friendly webpage at [this url](https://nreimers99-d-tracer-original-d-tracerapplication-xji04u.streamlit.app/). It is intended to be accessible for people with limited programming experience. It can also be cloned from the GitHub repository for those comfortable with Python.
+D-Tracer is available as a user-friendly webpage at [this url](https://nreimers99-d-tracer-d-tracerapplication-867ei8.streamlit.app/). It is intended to be accessible for people with limited programming experience. It can also be cloned from the GitHub repository for those comfortable with Python.
 
 Either way you choose to use D-Tracer, it will require some user inputs. The first is a peak list in .csv format. The peak list must have columns for m/z, retention time, and ccs values as well as normalized intensities for 1 or more samples. 
 
