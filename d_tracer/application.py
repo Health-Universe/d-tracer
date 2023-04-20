@@ -20,6 +20,9 @@ import time
 from lipydomics.data import Dataset                                             
 from lipydomics.identification import add_feature_ids 
 
+st.title('D-Tracer')
+st.header('A tool for analyzeing dual isotope labeling mass spectrometry data')
+st.subheader('Noelle Reimers')
 
 # """Upload the csv datafile from the mass spec machine."""
 data = st.file_uploader("Choose file to upload:")
