@@ -67,8 +67,8 @@ else: pass # This else statement encapsulates pair picking
 
 # """Define masses to be adjusted."""
 st.text("""Step 4: Enter the number of deuterium atoms on each of the labeled compounds used 
-in your experiment. Please enter the smaller number first. Values can be anywhere from 
-0 to 80.""")
+in your experiment. Please enter the smaller number first. Values can be anywhere 
+from 0 to 80.""")
 m1 = st.number_input("Enter smaller number of deuterium atoms:", 0, 80, 5)
 m2 = st.number_input("Enter larger number of deuterium atoms:", 0, 80, 11)
 if m2 < m1:
@@ -89,8 +89,8 @@ if st.checkbox("Analyze", help="Click to run pair picking algorithm and adjust m
 else: st.stop()
 
 # """Define choices of data for the user to view."""
-st.text("""Step 6: To view the mass-adjusted pairs list and export to .csv file, select 'Yes' from the 
-dropdown menu.""")
+st.text("""Step 6: To view the mass-adjusted pairs list and export to .csv file, select 
+'Yes' from the dropdown menu.""")
 choices = [
 	"Show mass-adjusted pairs list?",
 	"Yes",
@@ -123,6 +123,7 @@ if choice_b == choices[2]:
 		#label="Export to excel",
 		#data=lipid_ids.to_excel("tempfile.xlsx"), 
 		#file_name="tempfile.xlsx"
-st.text("""Thank you for using D-Tracer! Any comments, questions, or concerns can be submitted as an 
-issue on Github (nreimers99/D-Tracer) or sent to Noelle directly at nreimers@uw.edu""")
+st.text("""Thank you for using D-Tracer! Any comments, questions, or concerns can be 
+submitted as an issue on Github (nreimers99/D-Tracer) or sent to Noelle directly 
+at nreimers@uw.edu""")
 		
