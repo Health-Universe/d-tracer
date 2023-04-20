@@ -58,8 +58,8 @@ if choice_a == "Find Standards":
 else: pass # This else statement encapsulates pair picking
 
 # """Define masses to be adjusted."""
-m1 = st.number_input("Enter first mass adjustment:", 0, 80, 5)
-m2 = st.number_input("Enter second mass adjustment:", 0, 80, 11)
+m1 = st.number_input("Enter smaller number of deuterium atoms:", 0, 80, 5)
+m2 = st.number_input("Enter larger number of deuterium atoms:", 0, 80, 11)
 if m2 < m1:
 	st.warning("Second mass must be larger than the first")
 	st.stop()
@@ -78,8 +78,9 @@ else: st.stop()
 
 # """Define choices of data for the user to view."""
 choices = [
-	"What do you want to see?",
-	"Show mass-adjusted data of pairs"
+	"Show mass-adjusted pairs list?",
+	"Yes",
+	"No"
 	#"Identify Lipids"
 	]
 choice_b = st.selectbox("Pick One:", choices)
@@ -92,6 +93,9 @@ if choice_b == choices[1]:
 		data=df_adjusted.to_csv(index=False), 
 		file_name="tempfile.csv"
 		)
+
+if choice_b == choices[2]:
+	pass
 
 # if choice_b == choices[2]:
 	#temp_data = st.file_uploader("Choose file to upload again:")
