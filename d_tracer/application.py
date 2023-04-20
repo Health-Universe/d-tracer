@@ -24,7 +24,8 @@ st.title('D-Tracer')
 st.header('A tool for analyzing dual isotope labeling mass spectrometry data')
 
 # """Upload the csv datafile from the mass spec machine."""
-st.text('Step One: Upload a .csv peaklist with m/z, Retention time (min), and CCS (angstrom^2) columns.')
+st.text('''Step One: Upload a .csv peaklist with m/z, Retention time (min), and 
+CCS (angstrom^2) columns.''')
 data = st.file_uploader("Choose file to upload:")
 
 # """If nothing is yet uploaded, do not show anything further."""
