@@ -39,15 +39,15 @@ time.sleep(.5)
 
 # """Define number of samples tested and trim unnecessary columns,
 # creating a new dataframe."""
-st.text("""Step 2: If you would like sample intensities 
-		included in the output file, enter the number of samples in your dataset""")
+st.text("""Step 2: If you would like sample intensities included in the output file, enter the 
+number of samples in your dataset""")
 n_samples = st.number_input("Enter number of samples:", 0, 100, 10)
 df_keep = functions.format_col(df, n_samples)
 
 # """Display two paths for continuing in the app. Finding standards
 # does not execute the lengthy pair picking algorithm."""
-st.text("""Step 3: To find isotope labeled pairs in the dataset, 
-			select 'Find pairs' in the dropdown menu""")
+st.text("""Step 3: To find isotope labeled pairs in the dataset, select 'Find pairs' in the dropdown 
+menu""")
 choice_a = st.radio("What would you like to do?",
 					("Find pairs", "Find Standards"))
 
@@ -65,8 +65,8 @@ if choice_a == "Find Standards":
 else: pass # This else statement encapsulates pair picking
 
 # """Define masses to be adjusted."""
-st.text("""Step 4: Enter the number of deuterium atoms on each of the labeled compounds used in 
-			your experiment. Please enter the smaller number first. Values can be anywhere from 0 to 80.""")
+st.text("""Step 4: Enter the number of deuterium atoms on each of the labeled compounds used in your 
+experiment. Please enter the smaller number first. Values can be anywhere from 0 to 80.""")
 m1 = st.number_input("Enter smaller number of deuterium atoms:", 0, 80, 5)
 m2 = st.number_input("Enter larger number of deuterium atoms:", 0, 80, 11)
 if m2 < m1:
@@ -120,6 +120,6 @@ if choice_b == choices[2]:
 		#label="Export to excel",
 		#data=lipid_ids.to_excel("tempfile.xlsx"), 
 		#file_name="tempfile.xlsx"
-st.text("""Thank you for using D-Tracer! Any comments, questions, or concerns can be
-		 submitted as an issue on Github (nreimers99/D-Tracer) or sent to Noelle directly at nreimers@uw.edu""")
+st.text("""Thank you for using D-Tracer! Any comments, questions, or concerns can be submitted as an 
+issue on Github (nreimers99/D-Tracer) or sent to Noelle directly at nreimers@uw.edu""")
 		
