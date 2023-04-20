@@ -21,10 +21,10 @@ from lipydomics.data import Dataset
 from lipydomics.identification import add_feature_ids 
 
 st.title('D-Tracer')
-st.header('A tool for analyzeing dual isotope labeling mass spectrometry data')
-st.subheader('Noelle Reimers')
+st.header('A tool for analyzing dual isotope labeling mass spectrometry data')
 
 # """Upload the csv datafile from the mass spec machine."""
+st.text('Step One: Upload a .csv peaklist with m/z, Retention time (min), and CCS (angstrom^2) columns.')
 data = st.file_uploader("Choose file to upload:")
 
 # """If nothing is yet uploaded, do not show anything further."""
@@ -39,11 +39,15 @@ time.sleep(.5)
 
 # """Define number of samples tested and trim unnecessary columns,
 # creating a new dataframe."""
+st.text("""Step 2: If you would like sample intensities 
+		included in the output file, enter the number of samples in your dataset""")
 n_samples = st.number_input("Enter number of samples:", 0, 100, 10)
 df_keep = functions.format_col(df, n_samples)
 
 # """Display two paths for continuing in the app. Finding standards
 # does not execute the lengthy pair picking algorithm."""
+st.text("""Step 3: To find isotope labeled pairs in the dataset, 
+			select 'Find pairs' in the dropdown menu""")
 choice_a = st.radio("What would you like to do?",
 					("Find pairs", "Find Standards"))
 
@@ -61,6 +65,8 @@ if choice_a == "Find Standards":
 else: pass # This else statement encapsulates pair picking
 
 # """Define masses to be adjusted."""
+st.text("""Step 4: Enter the number of deuterium atoms on each of the labeled compounds used in 
+			your experiment. Please enter the smaller number first. Values can be anywhere from 0 to 80.""")
 m1 = st.number_input("Enter smaller number of deuterium atoms:", 0, 80, 5)
 m2 = st.number_input("Enter larger number of deuterium atoms:", 0, 80, 11)
 if m2 < m1:
@@ -70,6 +76,7 @@ if m2 < m1:
 # """Check the box to execute the pair picking and mass-adjustment algorithm and cache
 #  the result. The 'st.button' feature would not work in this context because it does 
 #  not remain 'True' after the button is pressed."""
+st.text("Step 5: To search for labeled pairs in the dataset, check 'Analyze'.")
 if st.checkbox("Analyze", help="Click to run pair picking algorithm and adjust masses"):
 	start = time.time()
 	idxs, pairs = functions.pick_pairs(df_keep, m1, m2)
@@ -80,6 +87,7 @@ if st.checkbox("Analyze", help="Click to run pair picking algorithm and adjust m
 else: st.stop()
 
 # """Define choices of data for the user to view."""
+st.text("Step 6: To view the mass-adjusted pairs list and export to .csv file, select 'Yes' from the dropdown menu.")
 choices = [
 	"Show mass-adjusted pairs list?",
 	"Yes",
@@ -112,4 +120,6 @@ if choice_b == choices[2]:
 		#label="Export to excel",
 		#data=lipid_ids.to_excel("tempfile.xlsx"), 
 		#file_name="tempfile.xlsx"
+st.text("""Thank you for using D-Tracer! Any comments, questions, or concerns can be
+		 submitted as an issue on Github (nreimers99/D-Tracer) or sent to Noelle directly at nreimers@uw.edu""")
 		
