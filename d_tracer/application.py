@@ -123,6 +123,12 @@ if choice_b == choices[2]:
 		#label="Export to excel",
 		#data=lipid_ids.to_excel("tempfile.xlsx"), 
 		#file_name="tempfile.xlsx"
+
+# Heatmap plotting function
+if st.checkbox("Show Heatmap"):
+	functions.plot_heatmap(df_adjusted)
+else:
+	st.stop()
 st.text("""Thank you for using D-Tracer! Any comments, questions, or concerns can be 
 submitted as an issue on Github (nreimers99/D-Tracer) or sent to Noelle directly 
 at nreimers@uw.edu""")

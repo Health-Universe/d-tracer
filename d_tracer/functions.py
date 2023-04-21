@@ -6,6 +6,7 @@ import sys
 import time
 from lipydomics.data import Dataset
 from lipydomics.identification import add_feature_ids
+import matplotlib.pyplot as plt
 
 def upload(file, limit=None):
     """Function for importing csv file and removing top two irrelevant rows.
@@ -114,3 +115,18 @@ def id_standards(df, mz_standard, rt_standard):
         print ('Warning: Cannot find matching Retention time standard')
     return find_mz_rt
 
+def plot_heatmap(df):
+    df = df.drop(['Compound','m/z','Retention time (min)','CCS (angstrom^2)'], axis=1)
+    df = df.reset_index()
+    x_data = df['m/z_adj'].values
+    y_data = df.drop(['index', 'm/z_adj'], axis=1)
+    y_labels = (y_data.columns)
+    fig, ax = plt.subplots()
+    plt.imshow(y_data.values.T, cmap='rainbow', aspect='auto', interpolation='nearest')
+    plt.colorbar()
+    ax.set_xticks(np.arange(len(x_data)), labels=x_data)
+    ax.set_yticks(np.arange(len(y_labels)), labels=y_labels)
+    plt.setp(ax.get_xticklabels(), rotation=90, ha='right', rotation_mode='anchor')
+    plt.xlabel("Adjusted m/z")
+    plt.ylabel("Sample")
+    plt.show
