@@ -126,7 +126,8 @@ if choice_b == choices[2]:
 
 # Heatmap plotting function
 if st.checkbox("Show Heatmap"):
-	fig = functions.plot_heatmap(df_adjusted)
+	functions.plot_heatmap(df_adjusted)
+	fig, ax = plt.subplots()
 	st.pyplot(fig)
 else:
 	st.stop()
