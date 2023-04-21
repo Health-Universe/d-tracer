@@ -3,4 +3,3 @@ pandas
 streamlit
 streamlib
 lipidomics
-matplotlib.pyplot
