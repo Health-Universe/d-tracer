@@ -19,6 +19,7 @@ import sys
 import time                                                                     
 from lipydomics.data import Dataset                                             
 from lipydomics.identification import add_feature_ids 
+import matplotlib.pyplot as plt
 
 st.title('D-Tracer')
 st.header('A tool for analyzing dual isotope labeling mass spectrometry data')
