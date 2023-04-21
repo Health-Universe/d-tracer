@@ -130,10 +130,11 @@ if choice_b == choices[2]:
 if st.checkbox("Show Heatmap"):
 	fig = functions.plot_heatmap(df_adjusted)
 	st.pyplot(fig)
+	st.set_option('deprecation.showPyplotGlobalUse', False)
 else:
 	st.stop()
 
-st.set_option('deprecation.showPyplotGlobalUse', False)
+
 
 st.text("""Thank you for using D-Tracer! Any comments, questions, or concerns can be 
 submitted as an issue on Github (nreimers99/D-Tracer) or sent to Noelle directly 
