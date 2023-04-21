@@ -1,4 +1,6 @@
 numpy
 pandas
 streamlit
-LiPydomics 
+streamlib
+lipidomics
+matplotlib.pyplot

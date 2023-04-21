@@ -126,7 +126,6 @@ if choice_b == choices[2]:
 		#file_name="tempfile.xlsx"
 
 # Heatmap plotting function
-
 if st.checkbox("Show Heatmap"):
 	fig = functions.plot_heatmap(df_adjusted)
 	st.pyplot(fig)
