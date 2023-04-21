@@ -126,8 +126,8 @@ if choice_b == choices[2]:
 
 # Heatmap plotting function
 if st.checkbox("Show Heatmap"):
-	functions.plot_heatmap(df_adjusted)
-	st.pyplot()
+	fig = functions.plot_heatmap(df_adjusted)
+	st.pyplot(fig)
 else:
 	st.stop()
 st.text("""Thank you for using D-Tracer! Any comments, questions, or concerns can be 
